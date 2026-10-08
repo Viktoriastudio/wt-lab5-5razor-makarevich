@@ -1,0 +1,35 @@
+@page
+@model wt_lab5_5razor_makarevich.Pages.Products.EditModel
+
+<div class="container py-4">
+    <div class="card shadow-sm rounded-4">
+        <div class="card-body">
+            <h2 class="mb-4">Изменение задачи #@Model.Task.Id</h2>
+            <form method="post">
+                <input type="hidden" asp-for="Task.Id" />
+                <div class="mb-3">
+                    <label asp-for="Task.Title" class="form-label">Название</label>
+                    <input asp-for="Task.Title" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Task.Project" class="form-label">Проект</label>
+                    <input asp-for="Task.Project" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Task.Assignee" class="form-label">Исполнитель</label>
+                    <input asp-for="Task.Assignee" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Task.EstimatedHours" class="form-label">Оценка часов</label>
+                    <input asp-for="Task.EstimatedHours" class="form-control" />
+                </div>
+                <div class="form-check mb-3">
+                    <input asp-for="Task.IsCompleted" class="form-check-input" />
+                    <label asp-for="Task.IsCompleted" class="form-check-label">Завершена</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <a asp-page="./Index" class="btn btn-secondary">Назад</a>
+            </form>
+        </div>
+    </div>
+</div>
