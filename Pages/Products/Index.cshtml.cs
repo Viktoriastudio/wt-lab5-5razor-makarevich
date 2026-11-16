@@ -1,15 +1,26 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using wt_lab5_5razor_makarevich.Data;
-using wt_lab5_5razor_makarevich.Models;
+using Microsoft.EntityFrameworkCore;
+using wt_lab8_8razor_postgresql_makarevich.Data;
+using wt_lab8_8razor_postgresql_makarevich.Models;
+using Microsoft.AspNetCore.Mvc;
 
-namespace wt_lab5_5razor_makarevich.Pages.Products;
+namespace wt_lab8_8razor_postgresql_makarevich.Pages.Products;
 
 public class IndexModel : PageModel
 {
-    public List<TaskItem> Tasks { get; set; } = new();
+    private readonly AppDbContext _context;
+    public IndexModel(AppDbContext context) => _context = context;
 
-    public void OnGet()
+    public List<Product> Products { get; set; } = new();
+
+    [BindProperty(SupportsGet = true)]
+    public string? Search { get; set; }
+
+    public async Task OnGetAsync()
     {
-        Tasks = TaskStore.Tasks;
+        var query = _context.Products.AsQueryable();
+        if (!string.IsNullOrWhiteSpace(Search))
+            query = query.Where(p => p.Name.Contains(Search));
+        Products = await query.OrderBy(p => p.Name).ToListAsync();
     }
 }

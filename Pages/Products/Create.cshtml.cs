@@ -1,24 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using wt_lab5_5razor_makarevich.Data;
-using wt_lab5_5razor_makarevich.Models;
+using wt_lab8_8razor_postgresql_makarevich.Data;
+using wt_lab8_8razor_postgresql_makarevich.Models;
 
-namespace wt_lab5_5razor_makarevich.Pages.Products;
+namespace wt_lab8_8razor_postgresql_makarevich.Pages.Products;
 
 public class CreateModel : PageModel
 {
+    private readonly AppDbContext _context;
+    public CreateModel(AppDbContext context) => _context = context;
+
     [BindProperty]
-    public TaskItem Task { get; set; } = new();
+    public Product Product { get; set; } = new();
 
-    public void OnGet() { }
+    public IActionResult OnGet() => Page();
 
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPostAsync()
     {
-        if (!ModelState.IsValid)
-            return Page();
-
-        Task.Id = TaskStore.Tasks.Any() ? TaskStore.Tasks.Max(t => t.Id) + 1 : 1;
-        TaskStore.Tasks.Add(Task);
+        if (!ModelState.IsValid) return Page();
+        _context.Products.Add(Product);
+        await _context.SaveChangesAsync();
         return RedirectToPage("./Index");
     }
 }

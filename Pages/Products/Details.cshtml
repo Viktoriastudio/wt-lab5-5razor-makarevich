@@ -1,23 +1,10 @@
 @page
-@model wt_lab5_5razor_makarevich.Pages.Products.DetailsModel
-
-<div class="container py-4">
-    <div class="card shadow-sm rounded-4">
-        <div class="card-body">
-            <h1 class="mb-4">Задача #@Model.Task.Id</h1>
-            <dl class="row">
-                <dt class="col-sm-3">Название</dt>
-                <dd class="col-sm-9">@Model.Task.Title</dd>
-                <dt class="col-sm-3">Проект</dt>
-                <dd class="col-sm-9">@Model.Task.Project</dd>
-                <dt class="col-sm-3">Исполнитель</dt>
-                <dd class="col-sm-9">@Model.Task.Assignee</dd>
-                <dt class="col-sm-3">Часы</dt>
-                <dd class="col-sm-9">@Model.Task.EstimatedHours</dd>
-                <dt class="col-sm-3">Статус</dt>
-                <dd class="col-sm-9">@(Model.Task.IsCompleted ? "Завершена" : "В работе")</dd>
-            </dl>
-            <a asp-page="./Index" class="btn btn-secondary">Назад к списку</a>
-        </div>
-    </div>
+@model wt_lab8_8razor_postgresql_makarevich.Pages.Products.DetailsModel
+<h1>Детали товара</h1>
+<div>
+    <p><strong>Название:</strong> @Model.Product.Name</p>
+    <p><strong>Категория:</strong> @Model.Product.Category</p>
+    <p><strong>Цена:</strong> @Model.Product.Price</p>
+    <p><strong>Доступен:</strong> @(Model.Product.IsAvailable ? "Да" : "Нет")</p>
 </div>
+<a asp-page="./Index">Назад к списку</a>

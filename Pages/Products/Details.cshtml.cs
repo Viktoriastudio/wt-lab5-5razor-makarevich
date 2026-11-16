@@ -1,20 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using wt_lab5_5razor_makarevich.Data;
-using wt_lab5_5razor_makarevich.Models;
+using Microsoft.EntityFrameworkCore;
+using wt_lab8_8razor_postgresql_makarevich.Data;
+using wt_lab8_8razor_postgresql_makarevich.Models;
 
-namespace wt_lab5_5razor_makarevich.Pages.Products;
+namespace wt_lab8_8razor_postgresql_makarevich.Pages.Products;
 
 public class DetailsModel : PageModel
 {
-    public TaskItem Task { get; set; } = new();
+    private readonly AppDbContext _context;
+    public DetailsModel(AppDbContext context) => _context = context;
 
-    public IActionResult OnGet(int id)
+    public Product Product { get; set; } = new();
+
+    public async Task<IActionResult> OnGetAsync(int? id)
     {
-        var found = TaskStore.Tasks.FirstOrDefault(t => t.Id == id);
-        if (found == null)
-            return NotFound();
-        Task = found;
+        if (id == null) return NotFound();
+        Product = await _context.Products.FindAsync(id);
+        if (Product == null) return NotFound();
         return Page();
     }
 }
